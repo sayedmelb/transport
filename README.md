@@ -1,2 +1,2 @@
 # transport
-This is a project on transport
+This is a project on transport that has listing of various bus operators.
