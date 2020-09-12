@@ -40,5 +40,14 @@ export class BusApiService {
     );
   }
 
+
+  updateBusItem(busOperator: BusOperator) {
+    const id = busOperator.id;
+    const url = this.apiUrl
+    console.log('id', id);
+    return this.http.put(`${url}/${id}`, busOperator);
+      
+  }
+
   constructor(private http: HttpClient, private logger: NGXLogger) {}
 }

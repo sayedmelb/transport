@@ -21,7 +21,7 @@ export class TransportListingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBusList();
-    
+
   }
 
   getBusList() {
@@ -38,6 +38,20 @@ export class TransportListingComponent implements OnInit {
         // }
       }
     );
+  }
+
+  onSaveNotes(row){
+    this.busApiService.updateBusItem(row).subscribe(
+      (resp)=> {
+        this.logger.log('after update', resp);
+      },
+      (error) => {
+        this.logger.log(error);
+
+      }
+    );
+
+
   }
 
 

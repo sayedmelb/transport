@@ -60,6 +60,11 @@
                       <div class="col-4">{{bus.routeVariant}}</div>
                       <div class="col-4">{{bus.deviationFromTimetable}}</div>
                     </ng-container>
+                    <div class="col-12">
+                       
+                        <input type="text" [(ngModel)]="row.notes" placeholder="Enter notes" />
+                    </div>
+                    <div class="col-12"><button [disabled]="row.notes.length===0"  (click)="onSaveNotes(row)" class="btn btn-primary">Save Notes</button></div>
                   </div>
                 </div>
               </div>

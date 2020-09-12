@@ -10,6 +10,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule} from '@angular/common/http';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -25,6 +26,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     AppRoutingModule,
     NgxDatatableModule,
     HttpClientModule,
+    FormsModule,
     LoggerModule.forRoot({
       serverLoggingUrl: '/api/logs',
       level: environment.LOGGER_LEVEL ? NgxLoggerLevel.LOG : NgxLoggerLevel.OFF,
