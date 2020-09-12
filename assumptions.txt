@@ -1,0 +1,2 @@
+1. An index id has been added to each row in json file for traching
+2. Save notes button for a record will remain disabled unless the user types in some notes.
