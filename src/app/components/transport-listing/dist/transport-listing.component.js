@@ -19,6 +19,7 @@ var TransportListingComponent = /** @class */ (function () {
         this.downSrc = '';
         this.isLoading = true;
         this.spinnerSrc = '';
+        this.title = 'Bus Reports';
     }
     TransportListingComponent.prototype.ngOnInit = function () {
         this.upSrc = './../../../assets/images/up.png';

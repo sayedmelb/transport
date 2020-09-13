@@ -28,4 +28,29 @@ describe('TransportListingComponent', function () {
         app.ngOnInit();
         expect(app).toBeTruthy();
     });
+    it('should have expected title', function () {
+        var app = fixture.debugElement.componentInstance;
+        expect(component.title).toBe('Bus Reports');
+    });
+    it('the data array returned from JSON server should return value', function (done) {
+        busApiService.getBusListing().subscribe(function (data) {
+            expect(data.length).toBeGreaterThan(0);
+            done();
+        });
+    });
+    it('the busData object should have value', function (done) {
+        busApiService.getBusListing().subscribe(function (data) {
+            expect(component.busData.length).toBeGreaterThan(0);
+            done();
+        });
+    });
+    it('isLoading should be false after data gets loaded', function (done) {
+        busApiService.getBusListing().subscribe(function (data) {
+            expect(component.isLoading).toEqual(false);
+            done();
+        });
+    });
+    afterEach(function () {
+        testing_1.TestBed.resetTestingModule();
+    });
 });

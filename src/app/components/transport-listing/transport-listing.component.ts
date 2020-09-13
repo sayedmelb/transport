@@ -18,6 +18,7 @@ export class TransportListingComponent implements OnInit {
   downSrc = '';
   isLoading = true;
   spinnerSrc = '';
+  title = 'Bus Reports';
 
   constructor(
     private busApiService: BusApiService,
