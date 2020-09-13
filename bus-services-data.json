@@ -4,7 +4,7 @@
       "id": "27c72c67-960d-476d-b39f-b44e5d9244f6",
       "organisation": "Sydney Buses",
       "date": "25/09/2015",
-      "notes": "ok updated",
+      "notes": "",
       "busData": [
         {
           "busId": "42612",
@@ -38,7 +38,7 @@
       "id": "179826f7-1dac-4de5-b1e4-f838d1997bfe",
       "organisation": "Westbus",
       "date": "25/09/2015",
-      "notes": "testing.",
+      "notes": "testing",
       "busData": [
         {
           "busId": "94811",
@@ -55,7 +55,134 @@
           "routeVariant": "834 1 1",
           "deviationFromTimetable": 423
         }
-      ]
+      ],
+      "status": "up"
+    },
+    {
+      "id": "179826f7-1dac-4de5-b1e4-f838d1997bab",
+      "organisation": "Eastbus",
+      "date": "25/09/2015",
+      "notes": "",
+      "busData": [
+        {
+          "busId": "94811",
+          "routeVariant": "664 2 1",
+          "deviationFromTimetable": 164
+        },
+        {
+          "busId": "62788",
+          "routeVariant": "664 2 2",
+          "deviationFromTimetable": 323
+        },
+        {
+          "busId": "14221",
+          "routeVariant": "834 1 1",
+          "deviationFromTimetable": 179
+        }
+      ],
+      "status": "up"
+    },
+    {
+      "id": "27c72c67-960d-476d-b39f-b44e5d924410",
+      "organisation": "Southbus",
+      "date": "25/09/2015",
+      "notes": "",
+      "busData": [
+        {
+          "busId": "42612",
+          "routeVariant": "891 2 1",
+          "deviationFromTimetable": 77
+        },
+        {
+          "busId": "29016",
+          "routeVariant": "400 1 1",
+          "deviationFromTimetable": 340
+        },
+        {
+          "busId": "90467",
+          "routeVariant": "393 1 1",
+          "deviationFromTimetable": 220
+        },
+        {
+          "busId": "88836",
+          "routeVariant": "M20 1 0",
+          "deviationFromTimetable": -287
+        },
+        {
+          "busId": "79367",
+          "routeVariant": "L21 2 1",
+          "deviationFromTimetable": 347
+        }
+      ],
+      "status": "down"
+    },
+    {
+      "id": "27c72c67-960d-476d-b39f-b44e5d924412",
+      "organisation": "Northbus",
+      "date": "25/09/2015",
+      "notes": "",
+      "busData": [
+        {
+          "busId": "42612",
+          "routeVariant": "891 2 1",
+          "deviationFromTimetable": 77
+        },
+        {
+          "busId": "29016",
+          "routeVariant": "400 1 1",
+          "deviationFromTimetable": 340
+        },
+        {
+          "busId": "90467",
+          "routeVariant": "393 1 1",
+          "deviationFromTimetable": 220
+        },
+        {
+          "busId": "88836",
+          "routeVariant": "M20 1 0",
+          "deviationFromTimetable": -287
+        },
+        {
+          "busId": "79367",
+          "routeVariant": "L21 2 1",
+          "deviationFromTimetable": 347
+        }
+      ],
+      "status": "down"
+    },
+    {
+      "id": "27c72c67-960d-476d-b39f-b44e5d924413",
+      "organisation": "Centralbus",
+      "date": "25/09/2015",
+      "notes": "",
+      "busData": [
+        {
+          "busId": "42612",
+          "routeVariant": "891 2 1",
+          "deviationFromTimetable": 77
+        },
+        {
+          "busId": "29016",
+          "routeVariant": "400 1 1",
+          "deviationFromTimetable": 340
+        },
+        {
+          "busId": "90467",
+          "routeVariant": "393 1 1",
+          "deviationFromTimetable": 220
+        },
+        {
+          "busId": "88836",
+          "routeVariant": "M20 1 0",
+          "deviationFromTimetable": -287
+        },
+        {
+          "busId": "79367",
+          "routeVariant": "L21 2 1",
+          "deviationFromTimetable": 347
+        }
+      ],
+      "status": "down"
     }
   ]
 }

@@ -3,3 +3,100 @@
 datatable-header{
     height: 0px !important;
 }
+
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+//global style for errors
+.alert-danger {
+ color: color(primary);
+}
+// .ngx-datatable .datatable-footer .datatable-pager .pager li  {
+//   padding: 4px!important;
+// }
+// .ngx-datatable .datatable-footer .datatable-pager .pager li a {
+//   padding: 4px!important;
+// }
+
+
+// .ngx-datatable .datatable-footer .datatable-pager .pager > .active {
+//   color: red!important;
+// }
+
+.datatable-footer {
+  background: white; // rgba(218, 226, 234,1);
+  padding: 0 1em 0 1em;
+  .page-count {
+      display: none;
+  }
+  .datatable-pager {
+      text-align: right!important;
+  }
+  .pager {
+      text-align: right;
+      li {
+          padding: 0 1em !important;
+          width: 1px;
+          a {
+              color: rgba(68, 68, 68, 1);
+              text-decoration: none;
+              font-family: MontserratBold;
+              font-size: 12px;
+          }
+          a:hover {
+              text-decoration: none;
+          }
+      }
+      li.active {
+          border-bottom: 4px solid black;
+      }
+      li:last-child {
+        display: none!important;
+      }
+      li:first-child {
+        display: none!important;
+        //margin-right: 1.5rem;
+      }
+      li:nth-child(2) {
+        // display: none!important;
+         margin-right: 0.8rem!important;
+       }
+  }
+} // Style rules for the footer pagination elements
+// .datatable-icon-done-all:before {
+//   background-image: url("../../assets/imgs/rht_dbl.png");
+//   content: "";
+//   background-size: 15px 15px;
+//   display: inline-block;
+//   width: 15px;
+//   height: 15px; // width: 5px;
+//   content: ">>";
+// }
+.datatable-icon-left:before {
+  background-image: url("assets/images/left-arrow.png");
+ content: "";
+ background-size: 20px 19px;
+ display: inline-block;
+ width: 30px;
+ height: 16px;
+ background-repeat: no-repeat;
+  
+ }
+ .datatable-icon-right:before {
+   background-image: url("assets/images/right-arrow.png");
+   content: "";
+   background-size: 20px 19px;
+   display: inline-block;
+   width: 20px;
+   height: 16px;
+   background-repeat: no-repeat;
+    
+ }
+ 
+.datatable-icon-skip:before {
+  content: ""
+}
+.datatable-icon-prev:before {
+  content: "";
+}
