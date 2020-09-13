@@ -1,2 +1,7 @@
 1. An index id has been added to each row in json file for traching
 2. Save notes button for a record will remain disabled unless the user types in some notes.
+3. If Status is null, it will display Unknown.
+4. If route cariant is 'UNKNOWN' it will display Unknown'
+5. if status value is within -200 or +200, it will display On time
+6. if status value is less than -200 it will display Early
+7. if status value is more than 200 it will display Late

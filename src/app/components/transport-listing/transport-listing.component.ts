@@ -1,27 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {BusApiService} from './../../services/bus-api.service';
-import { NGXLogger } from 'ngx-logger';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { BusApiService } from "./../../services/bus-api.service";
+import { NGXLogger } from "ngx-logger";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 
-
 @Component({
-  selector: 'app-transport-listing',
-  templateUrl: './transport-listing.component.html',
-  styleUrls: ['./transport-listing.component.scss']
+  selector: "app-transport-listing",
+  templateUrl: "./transport-listing.component.html",
+  styleUrls: ["./transport-listing.component.scss"],
 })
 export class TransportListingComponent implements OnInit {
-
-  
   @ViewChild(DatatableComponent) table: DatatableComponent;
   busData: any;
   columns = [{ name: "id" }];
 
-  constructor(private busApiService: BusApiService,  private logger: NGXLogger) { }
-
+  constructor(
+    private busApiService: BusApiService,
+    private logger: NGXLogger
+  ) {}
 
   ngOnInit(): void {
     this.getBusList();
-
   }
 
   getBusList() {
@@ -40,19 +38,42 @@ export class TransportListingComponent implements OnInit {
     );
   }
 
-  onSaveNotes(row){
+  onSaveNotes(row) {
     this.busApiService.updateBusItem(row).subscribe(
-      (resp)=> {
-        this.logger.log('after update', resp);
+      (resp) => {
+        this.logger.log("after update", resp);
       },
       (error) => {
         this.logger.log(error);
-
       }
     );
-
-
   }
 
+  getStatusValue(elem) {
+    if (!elem) {
+      return "Unknown";
+    } else {
+      let status = "";
+      if (elem >= -200 && elem <= 200) {
+        return "On Time";
+      } else if (elem < -200) {
+        return "Early";
+      } else if (elem > 200) {
+        return "Late";
+      }
 
+      //  switch(elem){
+      //    case (elem>=-200 && elem<=200 ):
+      //     status = 'On Time';
+      //     break;
+      //    case (elem<-200):
+      //      status = 'Early';
+      //       break;
+      //    case (elem>200):
+      //    status = 'Late';
+      //    break;
+      //  }
+      //  return status;
+    }
+  }
 }
