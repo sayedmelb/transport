@@ -14,8 +14,10 @@ export class TransportListingComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   busData: any;
   columns = [{ name: "id" }];
-  upSrc='';
-  downSrc='';
+  upSrc = "";
+  downSrc = "";
+  isLoading = true;
+  spinnerSrc = '';
 
   constructor(
     private busApiService: BusApiService,
@@ -23,8 +25,9 @@ export class TransportListingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.upSrc= './../../../assets/images/up.png';
-    this.downSrc='./../../../assets/images/down.png';
+    this.upSrc = "./../../../assets/images/up.png";
+    this.downSrc = "./../../../assets/images/down.png";
+    this.spinnerSrc = './../../../assets/images/busy-spinner.gif';
     this.getBusList();
   }
 
@@ -32,15 +35,16 @@ export class TransportListingComponent implements OnInit {
     this.busApiService.getBusListing().subscribe(
       (resp) => {
         this.logger.log(resp);
+        this.isLoading = false;
         this.busData = resp;
         this.normalizeList(this.busData);
       },
       (error) => {
-        // this.errorStatus = true;
-        // this.errorMessage = error.statusText;
-        // if (error === 'Timeout Exception') {
-        //   this.logger.log('Timed out');
-        // }
+        if (error === 'Timeout Exception') {
+          this.logger.log('Timed out');
+        } else {
+          this.logger.log(error);
+        }
       }
     );
   }
@@ -68,84 +72,73 @@ export class TransportListingComponent implements OnInit {
       } else if (elem > 200) {
         return "Late";
       }
-
-      
     }
   }
 
-  onArrowClick(rowindex,type,row){
-
-    
-
+  onArrowClick(rowindex, type, row) {
     let styleClass1;
     let styleClass2;
-    let rowHeader='row-header-' + parseInt(rowindex);
-    let colHeader='column-' + parseInt(rowindex);
+    let rowHeader = "row-header-" + parseInt(rowindex);
+    let colHeader = "column-" + parseInt(rowindex);
     let imgNor1, imgNor2, rowNor, colNor;
-    if(type==='up'){
-      row.status='down';
+    if (type === "up") {
+      row.status = "down";
 
-      styleClass1='arrow-up-' + parseInt(rowindex);
-      styleClass2='arrow-down-' + parseInt(rowindex);
+      styleClass1 = "arrow-up-" + parseInt(rowindex);
+      styleClass2 = "arrow-down-" + parseInt(rowindex);
       imgNor1 = document.getElementsByClassName(
         styleClass1
       ) as HTMLCollectionOf<HTMLElement>;
-       imgNor2 = document.getElementsByClassName(
+      imgNor2 = document.getElementsByClassName(
         styleClass2
       ) as HTMLCollectionOf<HTMLElement>;
 
-      rowNor = document.getElementsByClassName(
-        rowHeader
-      ) as HTMLCollectionOf<HTMLElement>;
+      rowNor = document.getElementsByClassName(rowHeader) as HTMLCollectionOf<
+        HTMLElement
+      >;
 
-      colNor = document.getElementsByClassName(
-        colHeader
-      ) as HTMLCollectionOf<HTMLElement>;
+      colNor = document.getElementsByClassName(colHeader) as HTMLCollectionOf<
+        HTMLElement
+      >;
 
-      imgNor1[0].classList.add('hide');
-      imgNor2[0].classList.remove('hide');
-      rowNor[0].classList.add('hide');
-      colNor[0].classList.add('hide');
-
-
-    }else {
-      row.status='up';
-      styleClass1='arrow-down-'+ parseInt(rowindex);
-      styleClass2='arrow-up-'+ parseInt(rowindex);
+      imgNor1[0].classList.add("hide");
+      imgNor2[0].classList.remove("hide");
+      rowNor[0].classList.add("hide");
+      colNor[0].classList.add("hide");
+    } else {
+      row.status = "up";
+      styleClass1 = "arrow-down-" + parseInt(rowindex);
+      styleClass2 = "arrow-up-" + parseInt(rowindex);
 
       imgNor1 = document.getElementsByClassName(
         styleClass1
       ) as HTMLCollectionOf<HTMLElement>;
-       imgNor2 = document.getElementsByClassName(
+      imgNor2 = document.getElementsByClassName(
         styleClass2
       ) as HTMLCollectionOf<HTMLElement>;
 
-      rowNor = document.getElementsByClassName(
-        rowHeader
-      ) as HTMLCollectionOf<HTMLElement>;
+      rowNor = document.getElementsByClassName(rowHeader) as HTMLCollectionOf<
+        HTMLElement
+      >;
 
-      colNor = document.getElementsByClassName(
-        colHeader
-      ) as HTMLCollectionOf<HTMLElement>;
+      colNor = document.getElementsByClassName(colHeader) as HTMLCollectionOf<
+        HTMLElement
+      >;
 
-      imgNor1[0].classList.add('hide');
-      imgNor2[0].classList.remove('hide');
-      rowNor[0].classList.remove('hide');
-      colNor[0].classList.remove('hide');
-
+      imgNor1[0].classList.add("hide");
+      imgNor2[0].classList.remove("hide");
+      rowNor[0].classList.remove("hide");
+      colNor[0].classList.remove("hide");
     }
-
-  
   }
 
-  normalizeList(dataList){
+  normalizeList(dataList) {
     forEach(dataList, (row) => {
-      row.status='down';
+      row.status = "down";
       // if (row.dueDate === null) {
       //   row.dueDate = "";
       // }
     });
-    this.logger.log('new list', this.busData);
+    this.logger.log("new list", this.busData);
   }
-
 }

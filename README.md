@@ -2,7 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.2.
 
-This is for transport operators bus listing service around Sydney. 
+This is for transport operators bus listing service around Sydney.
+
+## Json server
+
+install json-serer globally using `npm install -g json-server` 
+
+go to root of project and run `json-server http://localhost:3000/`
+
 
 ## Development server
 
