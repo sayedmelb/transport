@@ -10,6 +10,7 @@ exports.TransportListingComponent = void 0;
 var core_1 = require("@angular/core");
 var ngx_datatable_1 = require("@swimlane/ngx-datatable");
 var forEach_1 = require("lodash/forEach");
+var common_1 = require("./../../common/common");
 var TransportListingComponent = /** @class */ (function () {
     function TransportListingComponent(busApiService, logger) {
         this.busApiService = busApiService;
@@ -52,20 +53,18 @@ var TransportListingComponent = /** @class */ (function () {
         });
     };
     TransportListingComponent.prototype.getStatusValue = function (elem) {
-        if (!elem) {
-            return 'Unknown';
-        }
-        else {
-            if (elem >= -200 && elem <= 200) {
-                return 'On Time';
-            }
-            else if (elem < -200) {
-                return 'Early';
-            }
-            else if (elem > 200) {
-                return 'Late';
-            }
-        }
+        return common_1.getStatus(elem);
+        // if (!elem) {
+        //   return 'Unknown';
+        // } else {
+        //   if (elem >= -200 && elem <= 200) {
+        //     return 'On Time';
+        //   } else if (elem < -200) {
+        //     return 'Early';
+        //   } else if (elem > 200) {
+        //     return 'Late';
+        //   }
+        // }
     };
     TransportListingComponent.prototype.onArrowClick = function (rowindex, type, row) {
         var styleClass1;
@@ -107,9 +106,6 @@ var TransportListingComponent = /** @class */ (function () {
     TransportListingComponent.prototype.normalizeList = function (dataList) {
         forEach_1["default"](dataList, function (row) {
             row.status = 'down';
-            // if (row.dueDate === null) {
-            //   row.dueDate = '';
-            // }
         });
         this.logger.log('new list', this.busData);
     };

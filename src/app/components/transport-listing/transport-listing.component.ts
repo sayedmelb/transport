@@ -4,6 +4,7 @@ import { NGXLogger } from 'ngx-logger';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import * as _ from 'lodash';
 import forEach from 'lodash/forEach';
+import {getStatus} from './../../common/common';
 
 @Component({
   selector: 'app-transport-listing',
@@ -62,17 +63,18 @@ export class TransportListingComponent implements OnInit {
   }
 
   getStatusValue(elem) {
-    if (!elem) {
-      return 'Unknown';
-    } else {
-      if (elem >= -200 && elem <= 200) {
-        return 'On Time';
-      } else if (elem < -200) {
-        return 'Early';
-      } else if (elem > 200) {
-        return 'Late';
-      }
-    }
+    return getStatus(elem);
+    // if (!elem) {
+    //   return 'Unknown';
+    // } else {
+    //   if (elem >= -200 && elem <= 200) {
+    //     return 'On Time';
+    //   } else if (elem < -200) {
+    //     return 'Early';
+    //   } else if (elem > 200) {
+    //     return 'Late';
+    //   }
+    // }
   }
 
   onArrowClick(rowindex, type, row) {
@@ -139,9 +141,6 @@ export class TransportListingComponent implements OnInit {
   normalizeList(dataList) {
     forEach(dataList, (row) => {
       row.status = 'down';
-      // if (row.dueDate === null) {
-      //   row.dueDate = '';
-      // }
     });
     this.logger.log('new list', this.busData);
   }
