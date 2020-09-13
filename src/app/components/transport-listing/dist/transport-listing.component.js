@@ -14,8 +14,12 @@ var TransportListingComponent = /** @class */ (function () {
         this.busApiService = busApiService;
         this.logger = logger;
         this.columns = [{ name: "id" }];
+        this.upSrc = '';
+        this.downSrc = '';
     }
     TransportListingComponent.prototype.ngOnInit = function () {
+        this.upSrc = './../../../assets/images/up.png';
+        this.downSrc = './../../../assets/images/down.png';
         this.getBusList();
     };
     TransportListingComponent.prototype.getBusList = function () {
@@ -54,18 +58,32 @@ var TransportListingComponent = /** @class */ (function () {
             else if (elem > 200) {
                 return "Late";
             }
-            //  switch(elem){
-            //    case (elem>=-200 && elem<=200 ):
-            //     status = 'On Time';
-            //     break;
-            //    case (elem<-200):
-            //      status = 'Early';
-            //       break;
-            //    case (elem>200):
-            //    status = 'Late';
-            //    break;
-            //  }
-            //  return status;
+        }
+    };
+    TransportListingComponent.prototype.onArrowClick = function (rowindex, type) {
+        var styleClass1;
+        var styleClass2;
+        var rowHeader = 'row-header-' + parseInt(rowindex);
+        var imgNor1, imgNor2, rowNor;
+        if (type === 'up') {
+            styleClass1 = 'arrow-up-' + parseInt(rowindex);
+            styleClass2 = 'arrow-down-' + parseInt(rowindex);
+            imgNor1 = document.getElementsByClassName(styleClass1);
+            imgNor2 = document.getElementsByClassName(styleClass2);
+            rowNor = document.getElementsByClassName(rowHeader);
+            imgNor1[0].classList.add('hide');
+            imgNor2[0].classList.remove('hide');
+            rowNor[0].classList.add('hide');
+        }
+        else {
+            styleClass1 = 'arrow-down-' + parseInt(rowindex);
+            styleClass2 = 'arrow-up-' + parseInt(rowindex);
+            imgNor1 = document.getElementsByClassName(styleClass1);
+            imgNor2 = document.getElementsByClassName(styleClass2);
+            rowNor = document.getElementsByClassName(rowHeader);
+            imgNor1[0].classList.add('hide');
+            imgNor2[0].classList.remove('hide');
+            rowNor[0].classList.remove('hide');
         }
     };
     __decorate([

@@ -12,6 +12,8 @@ export class TransportListingComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   busData: any;
   columns = [{ name: "id" }];
+  upSrc='';
+  downSrc='';
 
   constructor(
     private busApiService: BusApiService,
@@ -19,6 +21,8 @@ export class TransportListingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.upSrc= './../../../assets/images/up.png';
+    this.downSrc='./../../../assets/images/down.png';
     this.getBusList();
   }
 
@@ -62,18 +66,63 @@ export class TransportListingComponent implements OnInit {
         return "Late";
       }
 
-      //  switch(elem){
-      //    case (elem>=-200 && elem<=200 ):
-      //     status = 'On Time';
-      //     break;
-      //    case (elem<-200):
-      //      status = 'Early';
-      //       break;
-      //    case (elem>200):
-      //    status = 'Late';
-      //    break;
-      //  }
-      //  return status;
+      
     }
   }
+
+  onArrowClick(rowindex,type){
+    let styleClass1;
+    let styleClass2;
+    let rowHeader='row-header-' + parseInt(rowindex);
+    let imgNor1, imgNor2, rowNor;
+    if(type==='up'){
+      styleClass1='arrow-up-' + parseInt(rowindex);
+      styleClass2='arrow-down-' + parseInt(rowindex);
+      imgNor1 = document.getElementsByClassName(
+        styleClass1
+      ) as HTMLCollectionOf<HTMLElement>;
+       imgNor2 = document.getElementsByClassName(
+        styleClass2
+      ) as HTMLCollectionOf<HTMLElement>;
+
+      rowNor = document.getElementsByClassName(
+        rowHeader
+      ) as HTMLCollectionOf<HTMLElement>;
+
+      imgNor1[0].classList.add('hide');
+      imgNor2[0].classList.remove('hide');
+      rowNor[0].classList.add('hide');
+
+
+    }else {
+      styleClass1='arrow-down-'+ parseInt(rowindex);
+      styleClass2='arrow-up-'+ parseInt(rowindex);
+
+      imgNor1 = document.getElementsByClassName(
+        styleClass1
+      ) as HTMLCollectionOf<HTMLElement>;
+       imgNor2 = document.getElementsByClassName(
+        styleClass2
+      ) as HTMLCollectionOf<HTMLElement>;
+
+      rowNor = document.getElementsByClassName(
+        rowHeader
+      ) as HTMLCollectionOf<HTMLElement>;
+
+      imgNor1[0].classList.add('hide');
+      imgNor2[0].classList.remove('hide');
+      rowNor[0].classList.remove('hide');
+
+    }
+
+     
+
+    
+
+    
+    
+    
+
+  }
+
 }
