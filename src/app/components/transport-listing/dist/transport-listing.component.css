@@ -1,0 +1,72 @@
+.type-warning {
+  color: orange;
+}
+
+.type-early {
+  color: red;
+}
+
+.type-ontime {
+  color: green;
+}
+
+.type-late {
+  color: lightskyblue;
+}
+
+.txt-area {
+  height: 100px;
+  width: 100%;
+}
+
+.header-style {
+  background-color: #DAEDF6;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.operator-heading {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.toogle-arrow {
+  float: right;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.grid-outer {
+  border: 1px solid lightgray;
+}
+
+.col-border {
+  border-bottom: 1px solid #dbd1d3;
+}
+
+.load-spinner {
+  height: 200px;
+}
+
+@media (min-width: 768px) {
+  .desktop-state {
+    display: block;
+  }
+
+  .mobile-state {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .desktop-state {
+    display: none;
+  }
+
+  .mobile-state {
+    display: block;
+  }
+}

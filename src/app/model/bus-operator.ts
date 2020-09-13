@@ -1,4 +1,4 @@
-import { Bus } from "./bus";
+import { Bus } from './bus';
 
 export interface BusOperator {
   id?: string;

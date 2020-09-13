@@ -9,9 +9,8 @@ import { throwError, TimeoutError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { NGXLogger } from 'ngx-logger';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BusApiService {
   private httpHeaders = {
@@ -26,9 +25,8 @@ export class BusApiService {
   public getBusListing(): Observable<BusOperator[]> {
     const url = this.apiUrl;
     // return this.http.get<any>(url,this.httpHeaders);
-    return this.http.get<any>(url)
-    .pipe(
-    timeout(parseInt(`${environment.RESPONSE_TIMEOUT_API}`, 10)),
+    return this.http.get<any>(url).pipe(delay(1500),
+      timeout(parseInt(`${environment.RESPONSE_TIMEOUT_API}`, 10)),
       catchError((error) => {
         if (error instanceof TimeoutError) {
           this.logger.log('timeout service.');
@@ -40,13 +38,11 @@ export class BusApiService {
     );
   }
 
-
   updateBusItem(busOperator: BusOperator) {
     const id = busOperator.id;
-    const url = this.apiUrl
+    const url = this.apiUrl;
     console.log('id', id);
     return this.http.put(`${url}/${id}`, busOperator);
-      
   }
 
   constructor(private http: HttpClient, private logger: NGXLogger) {}

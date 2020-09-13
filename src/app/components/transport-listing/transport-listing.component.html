@@ -1,77 +1,153 @@
-<div class="row">
-    <div class="col-12">
-      <h2>Bus Reports</h2>
-    </div>
-    <div class="col-12">
-      <ngx-datatable
-        #table
-        style="height: 100% !important"
-        class="tableWidget"
-        columnMode="force"
-        [rows]="busData"
-        [limit]="10"
-        [columnMode]="'force'"
-        [headerHeight]="30"
-        [footerHeight]="50"
-        [rowHeight]="'100%'"
-        [scrollbarV]="false"
-        [scrollbarH]="false"
-        [selectionType]="'multi'"
-        [columns]="columns"
-      >
-        <!-- 
-         [externalPaging]="true"
-        (select)="onSelect($event)" -->
-        <ng-template ngFor let-col [ngForOf]="columns">
-          <ngx-datatable-column
-            [name]="col.title"
-            [prop]="col.prop"
-            headerClass="{{ col.headerclass }}"
-            cellClass="{{ col.cellClass }}"
+<div *ngIf="isLoading" class="row pt-3 pb 3">
+  <div class="col-3"></div>
+  <div class="col-6">
+    <img class="load-spinner" src="{{ spinnerSrc }}" />
+  </div>
+  <div class="col-3"></div>
+</div>
+<div *ngIf="!isLoading" class="row">
+  <div class="col-12">
+    <h2>{{title}}</h2>
+  </div>
+  <div class="col-12">
+    <ngx-datatable
+      #table
+      style="height: 100% !important"
+      class="tableWidget"
+      columnMode="force"
+      [rows]="busData"
+      [limit]="3"
+      [columnMode]="'force'"
+      [headerHeight]="30"
+      [footerHeight]="50"
+      [rowHeight]="'100%'"
+      [scrollbarV]="false"
+      [scrollbarH]="false"
+      [selectionType]="'multi'"
+      [columns]="columns"
+    >
+      <ng-template ngFor let-col [ngForOf]="columns">
+        <ngx-datatable-column
+          [name]="col.title"
+          [prop]="col.prop"
+          headerClass="{{ col.headerclass }}"
+          cellClass="{{ col.cellClass }}"
+        >
+          <ng-template
+            let-column="col"
+            ngx-datatable-header-template
+            let-sort="sortFn"
           >
-            <ng-template
-              let-column="col"
-              ngx-datatable-header-template
-              let-sort="sortFn"
-            >
-              <span (click)="sort()"> </span>
-            </ng-template>
-  
-            <ng-template
-              let-column="col"
-              let-row="row"
-              let-value="value"
-              let-rowIndex="rowIndex"
-              ngx-datatable-cell-template
-            >
-              <div class="row">
-                <div class="col-12">
-                  <span class="operator-heading"
-                    >{{ row.organisation }} - {{ row.date }}</span
-                  >
+            <span (click)="sort()"> </span>
+          </ng-template>
+
+          <ng-template
+            let-column="col"
+            let-row="row"
+            let-value="value"
+            let-rowIndex="rowIndex"
+            ngx-datatable-cell-template
+          >
+            <div class="row ml-1 mr-1 mt-2 mb-2 grid-outer">
+              <div class="col-12 pb-2 pt-2">
+                <span
+                  (click)="onArrowClick(rowIndex, row.status, row)"
+                  class="operator-heading"
+                  >{{ row.organisation }} - {{ row.date }}</span
+                >
+                <img
+                  (click)="onArrowClick(rowIndex, 'up', row)"
+                  [ngClass]="rowIndex > -1 ? 'arrow-up-' + rowIndex : ''"
+                  class="up toogle-arrow hide"
+                  src="{{ upSrc }}"
+                />
+                <img
+                  (click)="onArrowClick(rowIndex, 'down', row)"
+                  [ngClass]="rowIndex > -1 ? 'arrow-down-' + rowIndex : ''"
+                  class="down toogle-arrow"
+                  src="{{ downSrc }}"
+                />
+              </div>
+              <div class="col-12">
+                <div
+                  class="row header-style pt-2 pb-2 pl-2 hide"
+                  [ngClass]="rowIndex > -1 ? 'row-header-' + rowIndex : ''"
+                >
+                  <div class="col-4">Bus Id</div>
+                  <div class="col-4">
+                    <span class="desktop-state">Route Variant</span>
+                    <span class="mobile-state">Route</span>
+                  </div>
+                  <div class="col-4">Status</div>
                 </div>
-                <div class="col-12">
-                  <div class="row">
-                    <div class="col-4">Bus Id</div>
-                    <div class="col-4">Route variant</div>
-                    <div class="col-4">Status</div>
-                    <ng-container *ngFor="let bus of row.busData; index as ind">
-                      <div class="col-4">{{bus.busId}}</div>
-                      <div class="col-4">{{bus.routeVariant}}</div>
-                      <div class="col-4">{{bus.deviationFromTimetable}}</div>
-                    </ng-container>
-                    <div class="col-12">
-                       
-                        <input type="text" [(ngModel)]="row.notes" placeholder="Enter notes" />
+                <div
+                  class="row hide"
+                  [ngClass]="rowIndex > -1 ? 'column-' + rowIndex : ''"
+                >
+                  <ng-container *ngFor="let bus of row.busData; index as ind">
+                    <div class="col-12 col-border">
+                      <div class="row pt-2 pb-2 pl-2">
+                        <div class="col-4">{{ bus.busId }}</div>
+                        <div class="col-4">
+                          <span
+                            class="type-warning"
+                            *ngIf="bus.routeVariant.toUpperCase() === 'UNKNOWN'"
+                            >Unknown</span
+                          >
+                          <span
+                            *ngIf="bus.routeVariant.toUpperCase() != 'UNKNOWN'"
+                            ><b>{{ bus.routeVariant.substring(0, 3) }}</b
+                            >{{
+                              bus.routeVariant.substring(
+                                3,
+                                bus.routeVariant.length
+                              )
+                            }}</span
+                          >
+                        </div>
+                        <div
+                          class="col-4"
+                          [ngClass]="{
+                            'type-warning': !bus.deviationFromTimetable,
+                            'type-early':
+                              getStatusValue(bus.deviationFromTimetable) ===
+                              'Early',
+                            'type-late':
+                              getStatusValue(bus.deviationFromTimetable) ===
+                              'Late',
+                            'type-ontime':
+                              getStatusValue(bus.deviationFromTimetable) ===
+                              'On Time'
+                          }"
+                        >
+                          {{ getStatusValue(bus.deviationFromTimetable) }}
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-12"><button [disabled]="row.notes.length===0"  (click)="onSaveNotes(row)" class="btn btn-primary">Save Notes</button></div>
+                  </ng-container>
+                  <div class="col-12 pt-4 pb-2">
+                    <textarea
+                      type="text"
+                      [(ngModel)]="row.notes"
+                      placeholder="Enter notes"
+                      class="txt-area"
+                    ></textarea>
+                  </div>
+                  <div class="col-12 pb-4">
+                    <button
+                      [disabled]="row.notes.length === 0"
+                      (click)="onSaveNotes(row)"
+                      class="btn btn-primary"
+                    >
+                      Save Notes
+                    </button>
                   </div>
                 </div>
               </div>
-            </ng-template>
-          </ngx-datatable-column>
-        </ng-template>
-      </ngx-datatable>
-    </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+      </ng-template>
+    </ngx-datatable>
   </div>
-  
+</div>
