@@ -14,15 +14,15 @@ var TransportListingComponent = /** @class */ (function () {
     function TransportListingComponent(busApiService, logger) {
         this.busApiService = busApiService;
         this.logger = logger;
-        this.columns = [{ name: "id" }];
-        this.upSrc = "";
-        this.downSrc = "";
+        this.columns = [{ name: 'id' }];
+        this.upSrc = '';
+        this.downSrc = '';
         this.isLoading = true;
         this.spinnerSrc = '';
     }
     TransportListingComponent.prototype.ngOnInit = function () {
-        this.upSrc = "./../../../assets/images/up.png";
-        this.downSrc = "./../../../assets/images/down.png";
+        this.upSrc = './../../../assets/images/up.png';
+        this.downSrc = './../../../assets/images/down.png';
         this.spinnerSrc = './../../../assets/images/busy-spinner.gif';
         this.getBusList();
     };
@@ -45,78 +45,81 @@ var TransportListingComponent = /** @class */ (function () {
     TransportListingComponent.prototype.onSaveNotes = function (row) {
         var _this = this;
         this.busApiService.updateBusItem(row).subscribe(function (resp) {
-            _this.logger.log("after update", resp);
+            _this.logger.log('after update', resp);
         }, function (error) {
             _this.logger.log(error);
         });
     };
     TransportListingComponent.prototype.getStatusValue = function (elem) {
         if (!elem) {
-            return "Unknown";
+            return 'Unknown';
         }
         else {
-            var status = "";
             if (elem >= -200 && elem <= 200) {
-                return "On Time";
+                return 'On Time';
             }
             else if (elem < -200) {
-                return "Early";
+                return 'Early';
             }
             else if (elem > 200) {
-                return "Late";
+                return 'Late';
             }
         }
     };
     TransportListingComponent.prototype.onArrowClick = function (rowindex, type, row) {
         var styleClass1;
         var styleClass2;
-        var rowHeader = "row-header-" + parseInt(rowindex);
-        var colHeader = "column-" + parseInt(rowindex);
-        var imgNor1, imgNor2, rowNor, colNor;
-        if (type === "up") {
-            row.status = "down";
-            styleClass1 = "arrow-up-" + parseInt(rowindex);
-            styleClass2 = "arrow-down-" + parseInt(rowindex);
+        /*eslint radix: ['error', 'as-needed']*/
+        var rowHeader = 'row-header-' + rowindex;
+        var colHeader = 'column-' + rowindex;
+        var imgNor1;
+        var imgNor2;
+        var rowNor;
+        var colNor;
+        if (type === 'up') {
+            row.status = 'down';
+            styleClass1 = 'arrow-up-' + rowindex;
+            styleClass2 = 'arrow-down-' + rowindex;
             imgNor1 = document.getElementsByClassName(styleClass1);
             imgNor2 = document.getElementsByClassName(styleClass2);
             rowNor = document.getElementsByClassName(rowHeader);
             colNor = document.getElementsByClassName(colHeader);
-            imgNor1[0].classList.add("hide");
-            imgNor2[0].classList.remove("hide");
-            rowNor[0].classList.add("hide");
-            colNor[0].classList.add("hide");
+            imgNor1[0].classList.add('hide');
+            imgNor2[0].classList.remove('hide');
+            rowNor[0].classList.add('hide');
+            colNor[0].classList.add('hide');
         }
         else {
-            row.status = "up";
-            styleClass1 = "arrow-down-" + parseInt(rowindex);
-            styleClass2 = "arrow-up-" + parseInt(rowindex);
+            row.status = 'up';
+            styleClass1 = 'arrow-down-' + rowindex;
+            styleClass2 = 'arrow-up-' + rowindex;
             imgNor1 = document.getElementsByClassName(styleClass1);
             imgNor2 = document.getElementsByClassName(styleClass2);
             rowNor = document.getElementsByClassName(rowHeader);
             colNor = document.getElementsByClassName(colHeader);
-            imgNor1[0].classList.add("hide");
-            imgNor2[0].classList.remove("hide");
-            rowNor[0].classList.remove("hide");
-            colNor[0].classList.remove("hide");
+            imgNor1[0].classList.add('hide');
+            imgNor2[0].classList.remove('hide');
+            rowNor[0].classList.remove('hide');
+            colNor[0].classList.remove('hide');
         }
     };
     TransportListingComponent.prototype.normalizeList = function (dataList) {
         forEach_1["default"](dataList, function (row) {
-            row.status = "down";
+            row.status = 'down';
             // if (row.dueDate === null) {
-            //   row.dueDate = "";
+            //   row.dueDate = '';
             // }
         });
-        this.logger.log("new list", this.busData);
+        this.logger.log('new list', this.busData);
     };
     __decorate([
         core_1.ViewChild(ngx_datatable_1.DatatableComponent)
     ], TransportListingComponent.prototype, "table");
     TransportListingComponent = __decorate([
         core_1.Component({
-            selector: "app-transport-listing",
-            templateUrl: "./transport-listing.component.html",
-            styleUrls: ["./transport-listing.component.scss"]
+            selector: 'app-transport-listing',
+            templateUrl: './transport-listing.component.html',
+            styleUrls: ['./transport-listing.component.scss']
         })
     ], TransportListingComponent);
     return TransportListingComponent;

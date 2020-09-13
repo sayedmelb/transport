@@ -19,9 +19,9 @@ var BusApiService = /** @class */ (function () {
         this.logger = logger;
         this.httpHeaders = {
             headers: new http_1.HttpHeaders({
-                "Content-type": "application/json",
-                Accept: "application/json",
-                Authorisation: "No Auth"
+                'Content-type': 'application/json',
+                Accept: 'application/json',
+                Authorisation: 'No Auth'
             })
         };
         this.apiUrl = "" + environment_1.environment.BUS_API_URL;
@@ -32,8 +32,8 @@ var BusApiService = /** @class */ (function () {
         // return this.http.get<any>(url,this.httpHeaders);
         return this.http.get(url).pipe(operators_2.delay(1500), operators_1.timeout(parseInt("" + environment_1.environment.RESPONSE_TIMEOUT_API, 10)), operators_1.catchError(function (error) {
             if (error instanceof rxjs_1.TimeoutError) {
-                _this.logger.log("timeout service.");
-                return rxjs_1.throwError("Timeout Exception");
+                _this.logger.log('timeout service.');
+                return rxjs_1.throwError('Timeout Exception');
             }
             return rxjs_1.throwError(error);
         }));
@@ -41,12 +41,12 @@ var BusApiService = /** @class */ (function () {
     BusApiService.prototype.updateBusItem = function (busOperator) {
         var id = busOperator.id;
         var url = this.apiUrl;
-        console.log("id", id);
+        console.log('id', id);
         return this.http.put(url + "/" + id, busOperator);
     };
     BusApiService = __decorate([
         core_1.Injectable({
-            providedIn: "root"
+            providedIn: 'root'
         })
     ], BusApiService);
     return BusApiService;

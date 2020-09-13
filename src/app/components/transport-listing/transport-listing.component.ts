@@ -1,21 +1,21 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { BusApiService } from "./../../services/bus-api.service";
-import { NGXLogger } from "ngx-logger";
-import { DatatableComponent } from "@swimlane/ngx-datatable";
-import * as _ from "lodash";
-import forEach from "lodash/forEach";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BusApiService } from './../../services/bus-api.service';
+import { NGXLogger } from 'ngx-logger';
+import { DatatableComponent } from '@swimlane/ngx-datatable';
+import * as _ from 'lodash';
+import forEach from 'lodash/forEach';
 
 @Component({
-  selector: "app-transport-listing",
-  templateUrl: "./transport-listing.component.html",
-  styleUrls: ["./transport-listing.component.scss"],
+  selector: 'app-transport-listing',
+  templateUrl: './transport-listing.component.html',
+  styleUrls: ['./transport-listing.component.scss'],
 })
 export class TransportListingComponent implements OnInit {
   @ViewChild(DatatableComponent) table: DatatableComponent;
   busData: any;
-  columns = [{ name: "id" }];
-  upSrc = "";
-  downSrc = "";
+  columns = [{ name: 'id' }];
+  upSrc = '';
+  downSrc = '';
   isLoading = true;
   spinnerSrc = '';
 
@@ -25,8 +25,8 @@ export class TransportListingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.upSrc = "./../../../assets/images/up.png";
-    this.downSrc = "./../../../assets/images/down.png";
+    this.upSrc = './../../../assets/images/up.png';
+    this.downSrc = './../../../assets/images/down.png';
     this.spinnerSrc = './../../../assets/images/busy-spinner.gif';
     this.getBusList();
   }
@@ -52,7 +52,7 @@ export class TransportListingComponent implements OnInit {
   onSaveNotes(row) {
     this.busApiService.updateBusItem(row).subscribe(
       (resp) => {
-        this.logger.log("after update", resp);
+        this.logger.log('after update', resp);
       },
       (error) => {
         this.logger.log(error);
@@ -62,15 +62,14 @@ export class TransportListingComponent implements OnInit {
 
   getStatusValue(elem) {
     if (!elem) {
-      return "Unknown";
+      return 'Unknown';
     } else {
-      let status = "";
       if (elem >= -200 && elem <= 200) {
-        return "On Time";
+        return 'On Time';
       } else if (elem < -200) {
-        return "Early";
+        return 'Early';
       } else if (elem > 200) {
-        return "Late";
+        return 'Late';
       }
     }
   }
@@ -78,14 +77,18 @@ export class TransportListingComponent implements OnInit {
   onArrowClick(rowindex, type, row) {
     let styleClass1;
     let styleClass2;
-    let rowHeader = "row-header-" + parseInt(rowindex);
-    let colHeader = "column-" + parseInt(rowindex);
-    let imgNor1, imgNor2, rowNor, colNor;
-    if (type === "up") {
-      row.status = "down";
+    /*eslint radix: ['error', 'as-needed']*/
+    const rowHeader = 'row-header-' + rowindex;
+    const colHeader = 'column-' + rowindex;
+    let imgNor1;
+    let imgNor2;
+    let rowNor;
+    let colNor;
+    if (type === 'up') {
+      row.status = 'down';
 
-      styleClass1 = "arrow-up-" + parseInt(rowindex);
-      styleClass2 = "arrow-down-" + parseInt(rowindex);
+      styleClass1 = 'arrow-up-' + rowindex;
+      styleClass2 = 'arrow-down-' + rowindex;
       imgNor1 = document.getElementsByClassName(
         styleClass1
       ) as HTMLCollectionOf<HTMLElement>;
@@ -101,14 +104,14 @@ export class TransportListingComponent implements OnInit {
         HTMLElement
       >;
 
-      imgNor1[0].classList.add("hide");
-      imgNor2[0].classList.remove("hide");
-      rowNor[0].classList.add("hide");
-      colNor[0].classList.add("hide");
+      imgNor1[0].classList.add('hide');
+      imgNor2[0].classList.remove('hide');
+      rowNor[0].classList.add('hide');
+      colNor[0].classList.add('hide');
     } else {
-      row.status = "up";
-      styleClass1 = "arrow-down-" + parseInt(rowindex);
-      styleClass2 = "arrow-up-" + parseInt(rowindex);
+      row.status = 'up';
+      styleClass1 = 'arrow-down-' + rowindex;
+      styleClass2 = 'arrow-up-' + rowindex;
 
       imgNor1 = document.getElementsByClassName(
         styleClass1
@@ -125,20 +128,20 @@ export class TransportListingComponent implements OnInit {
         HTMLElement
       >;
 
-      imgNor1[0].classList.add("hide");
-      imgNor2[0].classList.remove("hide");
-      rowNor[0].classList.remove("hide");
-      colNor[0].classList.remove("hide");
+      imgNor1[0].classList.add('hide');
+      imgNor2[0].classList.remove('hide');
+      rowNor[0].classList.remove('hide');
+      colNor[0].classList.remove('hide');
     }
   }
 
   normalizeList(dataList) {
     forEach(dataList, (row) => {
-      row.status = "down";
+      row.status = 'down';
       // if (row.dueDate === null) {
-      //   row.dueDate = "";
+      //   row.dueDate = '';
       // }
     });
-    this.logger.log("new list", this.busData);
+    this.logger.log('new list', this.busData);
   }
 }
