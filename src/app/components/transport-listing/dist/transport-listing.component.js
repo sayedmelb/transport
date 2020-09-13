@@ -5,10 +5,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 exports.__esModule = true;
 exports.TransportListingComponent = void 0;
 var core_1 = require("@angular/core");
 var ngx_datatable_1 = require("@swimlane/ngx-datatable");
+var _ = require("lodash");
 var forEach_1 = require("lodash/forEach");
 var common_1 = require("./../../common/common");
 var TransportListingComponent = /** @class */ (function () {
@@ -21,6 +29,7 @@ var TransportListingComponent = /** @class */ (function () {
         this.isLoading = true;
         this.spinnerSrc = '';
         this.title = 'Bus Reports';
+        this.search = '';
     }
     TransportListingComponent.prototype.ngOnInit = function () {
         this.upSrc = './../../../assets/images/up.png';
@@ -35,6 +44,9 @@ var TransportListingComponent = /** @class */ (function () {
             _this.isLoading = false;
             _this.busData = resp;
             _this.normalizeList(_this.busData);
+            _this.patchNull(_this.busData);
+            _this.logger.log('final busData', _this.busData);
+            _this.rawData = _.clone(_this.busData, true);
         }, function (error) {
             if (error === 'Timeout Exception') {
                 _this.logger.log('Timed out');
@@ -54,17 +66,6 @@ var TransportListingComponent = /** @class */ (function () {
     };
     TransportListingComponent.prototype.getStatusValue = function (elem) {
         return common_1.getStatus(elem);
-        // if (!elem) {
-        //   return 'Unknown';
-        // } else {
-        //   if (elem >= -200 && elem <= 200) {
-        //     return 'On Time';
-        //   } else if (elem < -200) {
-        //     return 'Early';
-        //   } else if (elem > 200) {
-        //     return 'Late';
-        //   }
-        // }
     };
     TransportListingComponent.prototype.onArrowClick = function (rowindex, type, row) {
         var styleClass1;
@@ -108,6 +109,45 @@ var TransportListingComponent = /** @class */ (function () {
             row.status = 'down';
         });
         this.logger.log('new list', this.busData);
+    };
+    TransportListingComponent.prototype.patchNull = function (data) {
+        forEach_1["default"](data, function (row) {
+            forEach_1["default"](row.busData, function (item) {
+                if (item.deviationFromTimetable === null) {
+                    item.deviationFromTimetable = '';
+                }
+            });
+        });
+    };
+    TransportListingComponent.prototype.onChange = function () {
+        this.logger.log('change', this.search);
+        if (this.busData) {
+            var temp = void 0;
+            temp = __spreadArrays(this.busData);
+            // temp = temp.map(({ fines, ...item }) => item);
+            var val_1 = this.search ? this.search.toLowerCase() : '';
+            var that_1 = this;
+            this.busData = temp.filter(function (d) {
+                return (JSON.stringify(that_1.getAllValues(d)).toLowerCase().indexOf(val_1) !==
+                    -1 || !val_1);
+            });
+        }
+    };
+    TransportListingComponent.prototype.onClear = function () {
+        this.busData = this.rawData;
+    };
+    TransportListingComponent.prototype.getAllValues = function (object) {
+        var values = [];
+        for (var _i = 0, _a = Object.keys(object); _i < _a.length; _i++) {
+            var key = _a[_i];
+            if (typeof object[key] !== 'object') {
+                values.push(object[key]);
+            }
+            else {
+                values = __spreadArrays(values, this.getAllValues(object[key]));
+            }
+        }
+        return values;
     };
     __decorate([
         core_1.ViewChild(ngx_datatable_1.DatatableComponent)

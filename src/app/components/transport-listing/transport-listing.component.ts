@@ -4,7 +4,7 @@ import { NGXLogger } from 'ngx-logger';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import * as _ from 'lodash';
 import forEach from 'lodash/forEach';
-import {getStatus} from './../../common/common';
+import { getStatus } from './../../common/common';
 
 @Component({
   selector: 'app-transport-listing',
@@ -20,6 +20,8 @@ export class TransportListingComponent implements OnInit {
   isLoading = true;
   spinnerSrc = '';
   title = 'Bus Reports';
+  search = '';
+  rawData: any;
 
   constructor(
     private busApiService: BusApiService,
@@ -40,6 +42,9 @@ export class TransportListingComponent implements OnInit {
         this.isLoading = false;
         this.busData = resp;
         this.normalizeList(this.busData);
+        this.patchNull(this.busData);
+        this.logger.log('final busData', this.busData);
+        this.rawData = _.clone(this.busData, true);
       },
       (error) => {
         if (error === 'Timeout Exception') {
@@ -64,17 +69,6 @@ export class TransportListingComponent implements OnInit {
 
   getStatusValue(elem) {
     return getStatus(elem);
-    // if (!elem) {
-    //   return 'Unknown';
-    // } else {
-    //   if (elem >= -200 && elem <= 200) {
-    //     return 'On Time';
-    //   } else if (elem < -200) {
-    //     return 'Early';
-    //   } else if (elem > 200) {
-    //     return 'Late';
-    //   }
-    // }
   }
 
   onArrowClick(rowindex, type, row) {
@@ -143,5 +137,50 @@ export class TransportListingComponent implements OnInit {
       row.status = 'down';
     });
     this.logger.log('new list', this.busData);
+  }
+
+  patchNull(data) {
+    forEach(data, (row) => {
+      forEach(row.busData, (item) => {
+        if (item.deviationFromTimetable === null) {
+          item.deviationFromTimetable = '';
+        }
+      });
+    });
+  }
+
+  onChange() {
+    this.logger.log('change', this.search);
+    if (this.busData) {
+      let temp;
+
+      temp = [...this.busData];
+      // temp = temp.map(({ fines, ...item }) => item);
+      const val = this.search ? this.search.toLowerCase() : '';
+      const that = this;
+      this.busData = temp.filter((d) => {
+        return (
+          JSON.stringify(that.getAllValues(d)).toLowerCase().indexOf(val) !==
+            -1 || !val
+        );
+      });
+    }
+  }
+
+  onClear() {
+    this.busData = this.rawData;
+  }
+
+  private getAllValues(object: object) {
+    let values = [];
+    for (const key of Object.keys(object)) {
+      if (typeof object[key] !== 'object') {
+        values.push(object[key]);
+      } else {
+        values = [...values, ...this.getAllValues(object[key])];
+      }
+    }
+
+    return values;
   }
 }
