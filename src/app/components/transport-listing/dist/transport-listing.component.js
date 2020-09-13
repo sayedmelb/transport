@@ -9,6 +9,7 @@ exports.__esModule = true;
 exports.TransportListingComponent = void 0;
 var core_1 = require("@angular/core");
 var ngx_datatable_1 = require("@swimlane/ngx-datatable");
+var forEach_1 = require("lodash/forEach");
 var TransportListingComponent = /** @class */ (function () {
     function TransportListingComponent(busApiService, logger) {
         this.busApiService = busApiService;
@@ -27,6 +28,7 @@ var TransportListingComponent = /** @class */ (function () {
         this.busApiService.getBusListing().subscribe(function (resp) {
             _this.logger.log(resp);
             _this.busData = resp;
+            _this.normalizeList(_this.busData);
         }, function (error) {
             // this.errorStatus = true;
             // this.errorMessage = error.statusText;
@@ -60,31 +62,47 @@ var TransportListingComponent = /** @class */ (function () {
             }
         }
     };
-    TransportListingComponent.prototype.onArrowClick = function (rowindex, type) {
+    TransportListingComponent.prototype.onArrowClick = function (rowindex, type, row) {
         var styleClass1;
         var styleClass2;
         var rowHeader = 'row-header-' + parseInt(rowindex);
-        var imgNor1, imgNor2, rowNor;
+        var colHeader = 'column-' + parseInt(rowindex);
+        var imgNor1, imgNor2, rowNor, colNor;
         if (type === 'up') {
+            row.status = 'down';
             styleClass1 = 'arrow-up-' + parseInt(rowindex);
             styleClass2 = 'arrow-down-' + parseInt(rowindex);
             imgNor1 = document.getElementsByClassName(styleClass1);
             imgNor2 = document.getElementsByClassName(styleClass2);
             rowNor = document.getElementsByClassName(rowHeader);
+            colNor = document.getElementsByClassName(colHeader);
             imgNor1[0].classList.add('hide');
             imgNor2[0].classList.remove('hide');
             rowNor[0].classList.add('hide');
+            colNor[0].classList.add('hide');
         }
         else {
+            row.status = 'up';
             styleClass1 = 'arrow-down-' + parseInt(rowindex);
             styleClass2 = 'arrow-up-' + parseInt(rowindex);
             imgNor1 = document.getElementsByClassName(styleClass1);
             imgNor2 = document.getElementsByClassName(styleClass2);
             rowNor = document.getElementsByClassName(rowHeader);
+            colNor = document.getElementsByClassName(colHeader);
             imgNor1[0].classList.add('hide');
             imgNor2[0].classList.remove('hide');
             rowNor[0].classList.remove('hide');
+            colNor[0].classList.remove('hide');
         }
+    };
+    TransportListingComponent.prototype.normalizeList = function (dataList) {
+        forEach_1["default"](dataList, function (row) {
+            row.status = 'down';
+            // if (row.dueDate === null) {
+            //   row.dueDate = "";
+            // }
+        });
+        this.logger.log('new list', this.busData);
     };
     __decorate([
         core_1.ViewChild(ngx_datatable_1.DatatableComponent)

@@ -4,7 +4,7 @@
       "id": "27c72c67-960d-476d-b39f-b44e5d9244f6",
       "organisation": "Sydney Buses",
       "date": "25/09/2015",
-      "notes": "dsd sdjkfndsf sdfsdfjksdfs dfsdjfsdf",
+      "notes": "ok updated",
       "busData": [
         {
           "busId": "42612",
@@ -31,7 +31,8 @@
           "routeVariant": "L21 2 1",
           "deviationFromTimetable": 347
         }
-      ]
+      ],
+      "status": "down"
     },
     {
       "id": "179826f7-1dac-4de5-b1e4-f838d1997bfe",

@@ -27,6 +27,7 @@
 
 .operator-heading {
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .toogle-arrow {
@@ -37,4 +38,31 @@
 
 .hide {
   display: none;
+}
+
+.grid-outer {
+  border: 1px solid lightgray;
+}
+
+.col-border {
+  border-bottom: 1px solid #dbd1d3;
+}
+
+@media (min-width: 768px) {
+  .desktop-state {
+    display: block;
+  }
+
+  .mobile-state {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .desktop-state {
+    display: none;
+  }
+
+  .mobile-state {
+    display: block;
+  }
 }

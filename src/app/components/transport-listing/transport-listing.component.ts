@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { BusApiService } from "./../../services/bus-api.service";
 import { NGXLogger } from "ngx-logger";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
+import * as _ from "lodash";
+import forEach from "lodash/forEach";
 
 @Component({
   selector: "app-transport-listing",
@@ -31,6 +33,7 @@ export class TransportListingComponent implements OnInit {
       (resp) => {
         this.logger.log(resp);
         this.busData = resp;
+        this.normalizeList(this.busData);
       },
       (error) => {
         // this.errorStatus = true;
@@ -70,12 +73,18 @@ export class TransportListingComponent implements OnInit {
     }
   }
 
-  onArrowClick(rowindex,type){
+  onArrowClick(rowindex,type,row){
+
+    
+
     let styleClass1;
     let styleClass2;
     let rowHeader='row-header-' + parseInt(rowindex);
-    let imgNor1, imgNor2, rowNor;
+    let colHeader='column-' + parseInt(rowindex);
+    let imgNor1, imgNor2, rowNor, colNor;
     if(type==='up'){
+      row.status='down';
+
       styleClass1='arrow-up-' + parseInt(rowindex);
       styleClass2='arrow-down-' + parseInt(rowindex);
       imgNor1 = document.getElementsByClassName(
@@ -89,12 +98,18 @@ export class TransportListingComponent implements OnInit {
         rowHeader
       ) as HTMLCollectionOf<HTMLElement>;
 
+      colNor = document.getElementsByClassName(
+        colHeader
+      ) as HTMLCollectionOf<HTMLElement>;
+
       imgNor1[0].classList.add('hide');
       imgNor2[0].classList.remove('hide');
       rowNor[0].classList.add('hide');
+      colNor[0].classList.add('hide');
 
 
     }else {
+      row.status='up';
       styleClass1='arrow-down-'+ parseInt(rowindex);
       styleClass2='arrow-up-'+ parseInt(rowindex);
 
@@ -109,20 +124,28 @@ export class TransportListingComponent implements OnInit {
         rowHeader
       ) as HTMLCollectionOf<HTMLElement>;
 
+      colNor = document.getElementsByClassName(
+        colHeader
+      ) as HTMLCollectionOf<HTMLElement>;
+
       imgNor1[0].classList.add('hide');
       imgNor2[0].classList.remove('hide');
       rowNor[0].classList.remove('hide');
+      colNor[0].classList.remove('hide');
 
     }
 
-     
+  
+  }
 
-    
-
-    
-    
-    
-
+  normalizeList(dataList){
+    forEach(dataList, (row) => {
+      row.status='down';
+      // if (row.dueDate === null) {
+      //   row.dueDate = "";
+      // }
+    });
+    this.logger.log('new list', this.busData);
   }
 
 }
