@@ -7,3 +7,5 @@
 7. if status value is more than 200 it will display Late
 8. two fields added to json (notes and state).
 9. pagination is set to 3 records per page for now. can be changed.
+10. mobile responsive added.
+11. if you want to add new record, you can update the json file but you have to restart the json server to see the chnages on frontend
