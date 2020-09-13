@@ -10,3 +10,9 @@
 10. mobile responsive added.
 11. if you want to add new record, you can update the json file but you have to restart the json server to see the chnages on frontend
 12. 1.5 milliseconds delay added to service to show loading icon as part of demo. this is not needed in real time scenario.
+13. Quick Search has been added. after serach user needs to click on clear to get original list.
+14. null for a specific field is filterered to make serach filter work properly. if null is expected 
+in other fields, the PatchNull function can be updated as required.
+15. The app will work only if json-server is run at (say localhost:3000)
+16. The UI is handled for both desktop and mobile version.
+17. Route Variation will be displayed at Route in mobile version.
