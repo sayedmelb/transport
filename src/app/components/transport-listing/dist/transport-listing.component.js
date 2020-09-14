@@ -135,6 +135,7 @@ var TransportListingComponent = /** @class */ (function () {
     };
     TransportListingComponent.prototype.onClear = function () {
         this.busData = this.rawData;
+        this.search = '';
     };
     TransportListingComponent.prototype.getAllValues = function (object) {
         var values = [];
