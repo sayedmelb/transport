@@ -169,6 +169,7 @@ export class TransportListingComponent implements OnInit {
 
   onClear() {
     this.busData = this.rawData;
+    this.search = '';
   }
 
   private getAllValues(object: object) {
